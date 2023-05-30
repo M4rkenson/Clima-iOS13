@@ -15,10 +15,10 @@ struct WeatherData: Codable {
     let base: String
 }
 
-struct Main:Codable {
+struct Main: Codable {
     let temp: Double
 }
-struct Weather:Codable {
+struct Weather: Codable {
     let description: String
     let id:Int
 }
