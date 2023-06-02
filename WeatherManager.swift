@@ -8,12 +8,17 @@ protocol WeatherManagerDelegate{
 }
 struct WeatherManager{
     let weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=6f65e34372c8c8528a1ac8fcecefbdae&units=metric"
-    
     var delegate: WeatherManagerDelegate?
     
     func fetchWeather(cityName: String) {
-        let urlString = "\(weatherURL)&q=\(cityName)"
-        performRequest(with: urlString)
+        if cityName.contains(" ") {
+            let newCityName = cityName.replacingOccurrences(of: " ", with: "%20", options: .literal, range: nil)
+            let urlString = "\(weatherURL)&q=\(newCityName)"
+            performRequest(with: urlString)
+        } else {
+            let urlString = "\(weatherURL)&q=\(cityName)"
+            performRequest(with: urlString)
+        }
     }
     func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         let urlString = "\(weatherURL)&lat=\(latitude)&lon=\(longitude)"
@@ -51,5 +56,4 @@ struct WeatherManager{
             return nil
         }
     }
-    
 }
